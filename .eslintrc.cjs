@@ -1,12 +1,12 @@
- module.exports = {
+module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
     'semistandard',
-     'eslint:recommended',
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended', 
+    'plugin:react-hooks/recommended'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
@@ -15,9 +15,8 @@
   rules: {
     'react-refresh/only-export-components': [
       'warn',
-      { allowConstantExport: true },
+      { allowConstantExport: true }
     ],
-    'is missing in props validation': off,
-  },
+    'is missing in props validation': off
+  }
 };
- 
