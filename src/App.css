@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -9,111 +11,88 @@ body {
   align-items: flex-start;
   justify-content: center;
   min-height: 100vh;
-  background-color: #666;
   font-family: sans-serif;
+  width: 100%;
 }
-button.square {
-  background-color: #dadada;
-  border: 2px solid #434343;
-  width: 8rem;
-  height: 8rem;
-  font-size: 5rem;
+div.board {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+div.board-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+button.reset {
+  padding: 0.5rem;
+  margin: 1rem;
+  background-color: #434343;
+  border-radius: 0.5rem;
+  box-shadow: 2px 5px 5px #111;
 }
 div.status {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   color: #dadada;
-  margin-bottom: 1rem;
+  padding-bottom: 2rem;
   text-align: center;
   font-weight: bold;
-  font-size: large;
+  font-size: xx-large;
 }
-div.game {
-  display: flex;
-  flex-direction: column;
+.winner {
+  padding-bottom: 2rem;
+  font-weight: bold;
+  font-size: xx-large;
+  color: rgba(0, 0, 0, 0.5);
+  animation-name: anim;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
 h1 {
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   color: #dadada;
   width: 100%;
-  border-bottom: #fff 2px solid;
+  border-bottom: #dadada 3px solid;
+  padding: 2rem;
   text-align: center;
   margin-bottom: 5rem;
-  font-size: 40px;
-}
-
-h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
-
-h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-h4 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-h5 {
-  margin-top: 0;
-  font-size: 14px;
-}
-
-h6 {
-  margin-top: 0;
-  font-size: 12px;
-}
-
-code {
-  font-size: 1.2em;
-}
-
-ul {
-  padding-left: 20px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: sans-serif;
-  margin: 20px;
-  padding: 0;
+  font-size: 50px;
 }
 
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  box-shadow: 8px 8px 5px #fff;
+  width: 10rem;
+  height: 10rem;
+  min-width: 5rem;
+  min-height: 5rem;
+  font-size: 5rem;
+  background-color: gray;
+  border: 3px solid rgb(248, 245, 245);
   float: left;
-  font-size: 24px;
   font-weight: bold;
-  line-height: 34px;
-  height: 50px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
   text-align: center;
-  width: 50px;
 }
 
-.board-row:after {
-  clear: both;
-  content: '';
-  display: table;
-}
-
-.status {
-  margin-bottom: 10px;
-}
-.game {
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
+@keyframes anim {
+  0% {
+    color: #ff0;
+  } /*Amarillo*/
+  25% {
+    color: #f80;
+  } /*Naranja*/
+  50% {
+    color: #fff;
+  } /*Negro*/
+  75% {
+    color: #f80;
+  } /*Otra vez naranja*/
+  100% {
+    color: #ff0;
+  } /*Otra vez amarillo*/
 }

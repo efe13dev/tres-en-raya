@@ -1,8 +1,27 @@
 import { useState } from 'react';
 import { calculateWinner } from '../utils';
-import { Square } from './Square';
+import { calculateDraw } from '../utils';
+import 'animate.css';
+import confetti from 'canvas-confetti';
 
-function Board({ xIsNext, squares, onPlay }) {
+function Square({ value, onSquareClick }) {
+  return (
+    <button
+      className='square'
+      onClick={onSquareClick}
+    >
+      {value}
+    </button>
+  );
+}
+
+export function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -13,20 +32,41 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = 'O';
     }
-    onPlay(nextSquares);
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   }
 
   const winner = calculateWinner(squares);
+
+  const draw = calculateDraw(squares);
   let status;
   if (winner) {
-    status = 'Ganador: ' + winner;
+    status = `Ganador: ${winner}`;
+    confetti({
+      angle: randomInRange(55, 125),
+      spread: randomInRange(50, 70),
+      particleCount: randomInRange(50, 100),
+      origin: { y: 0.6 }
+    });
+  } else if (draw) {
+    status = 'Empate';
   } else {
-    status = 'Turno del jugador: ' + (xIsNext ? 'X' : 'O');
+    status = 'Turno de jugador: ' + (xIsNext ? 'X' : 'O');
   }
+  const resetGame = () => {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
+  };
 
   return (
-    <>
-      <div className='status'>{status}</div>
+    <div className='board'>
+      <div
+        className={
+          status === `Ganador: ${winner}` ? 'status, winner' : 'status'
+        }
+      >
+        {status}
+      </div>
       <div className='board-row'>
         <Square
           value={squares[0]}
@@ -69,52 +109,12 @@ function Board({ xIsNext, squares, onPlay }) {
           onSquareClick={() => handleClick(8)}
         />
       </div>
-    </>
-  );
-}
-
-export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
-
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
-  }
-
-  function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
-  }
-
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = 'Ir hacia la jugada #' + move;
-    } else {
-      description = 'Ir al inicio del juego';
-    }
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
-
-  return (
-    <div className='game'>
-      <div className='game-board'>
-        <Board
-          xIsNext={xIsNext}
-          squares={currentSquares}
-          onPlay={handlePlay}
-        />
-      </div>
-      <div className='game-info'>
-        <ol>{moves}</ol>
-      </div>
+      <button
+        className='reset'
+        onClick={resetGame}
+      >
+        Reiniciar juego
+      </button>
     </div>
   );
 }
