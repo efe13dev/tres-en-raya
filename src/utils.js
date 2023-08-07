@@ -15,7 +15,6 @@ export function calculateWinner(squares) {
       return squares[a];
     }
   }
-
   return null;
 }
 export function calculateDraw(squares) {
