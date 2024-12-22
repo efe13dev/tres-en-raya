@@ -1,42 +1,60 @@
-﻿# Proyecto Tres en Raya con Vite y React
+# 🎮 Tres en Raya | Tic-Tac-Toe
 
-### Este es un proyecto de un juego clásico de "Tres en Raya" (también conocido como "Tic-Tac-Toe") implementado utilizando las tecnologías Vite y React. El objetivo de este juego es que dos jugadores se turnen para colocar sus fichas en un tablero de 3x3. El primer jugador que consiga colocar tres fichas en línea, ya sea horizontal, vertical o diagonalmente, será el ganador.
+<div align="center">
 
-## Características del proyecto:
+[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-4-646CFF.svg)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-- Tecnologías utilizadas: El proyecto se ha desarrollado utilizando Vite como herramienta de construcción y React para la creación de componentes y manejo de la interfaz de usuario.
+**[¡Juega Ahora! 🎮](https://tres-en-raya-smoky.vercel.app/)**
 
-- Componentización: El juego está estructurado en componentes reutilizables, lo que facilita su mantenimiento y extensibilidad. Los componentes principales incluyen el tablero, las casillas individuales y el componente de juego.
+</div>
 
-- Gestión del estado: Se ha utilizado el estado local de React para gestionar el estado del juego. Esto permite rastrear el tablero actual, las jugadas realizadas y el jugador activo.
+## 📝 Descripción
 
-- Interactividad: Los jugadores pueden interactuar con el juego haciendo clic en las casillas vacías del tablero para colocar sus fichas. El juego valida las jugadas y determina el resultado.
+Un juego clásico de Tres en Raya (Tic-Tac-Toe) implementado con tecnologías modernas. Disfruta de este juego intemporal en una interfaz limpia y moderna.
 
-- Detección de victoria: El juego detecta automáticamente cuándo un jugador ha ganado y muestra un mensaje de victoria. También tiene en cuenta el empate si todas las casillas se llenan sin que se forme una línea ganadora.
+## ✨ Características
 
-- Estilos personalizados: Se han aplicado estilos personalizados utilizando CSS para mejorar la apariencia y la experiencia visual del juego.
+- 🎯 Interfaz de usuario intuitiva y responsive
+- 🔄 Turnos alternos entre jugadores X y O
+- 🏆 Detección automática del ganador
+- 🔁 Opción para reiniciar el juego
+- 💻 Diseño moderno y minimalista
 
-### Instrucciones para ejecutar el proyecto:
+## 🛠️ Tecnologías Utilizadas
 
-1. Requisitos previos: Asegúrate de tener Node.js y npm instalados en tu sistema.
+- **React** - Biblioteca para construir interfaces de usuario
+- **Vite** - Herramienta de construcción que ofrece un desarrollo más rápido
+- **CSS** - Estilos modernos y responsive
 
-2. Clonar el repositorio: Clona este repositorio en tu computadora local utilizando Git.
+## 🚀 Instalación
 
-3. Instalar dependencias: Abre una terminal en la carpeta del proyecto y ejecuta el siguiente comando para instalar las dependencias necesarias:
+```bash
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/tres-en-raya.git
 
-```
+# Navegar al directorio del proyecto
+cd tres-en-raya
+
+# Instalar dependencias
 npm install
-```
 
-4. Iniciar la aplicación: Ejecuta el siguiente comando para iniciar la aplicación en un servidor local:
-
-```
+# Iniciar el servidor de desarrollo
 npm run dev
-
 ```
 
-4. Abrir en el navegador: Abre tu navegador web y ve a la dirección http://localhost:3000 para ver y jugar al Tres en Raya.
+## 🎮 Cómo Jugar
 
-### ¡Listo! Ahora puedes disfrutar del juego Tres en Raya implementado con Vite y React en tu navegador.
+1. El juego se juega en un tablero de 3x3
+2. Los jugadores se turnan para colocar sus fichas (X u O)
+3. El primer jugador que consiga alinear tres de sus fichas horizontal, vertical o diagonalmente gana
+4. Si todas las casillas están llenas y no hay ganador, el juego termina en empate
 
-Este proyecto muestra cómo puedes utilizar Vite y React para crear un juego simple y entretenido como el Tres en Raya. A partir de aquí, puedes expandir y mejorar el juego agregando nuevas características, como una inteligencia artificial para jugar contra la computadora, o mejorando la interfaz de usuario con animaciones y efectos visuales. ¡Diviértete desarrollando!
+## 🤝 Contribuir
+
+Las contribuciones son siempre bienvenidas. Por favor, lee las guías de contribución antes de enviar un pull request.
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE](./LICENSE) para más detalles.
