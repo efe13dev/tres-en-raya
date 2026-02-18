@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useEffect, useRef } from "react";
 
 export function FloatingLetters() {
   const containerRef = useRef(null);
@@ -48,7 +48,7 @@ export function FloatingLetters() {
 
       // Animación de opacidad pulsante
       gsap.to(letterElement, {
-        opacity: 0.3 + Math.random() * 0.4,
+        opacity: 0.06 + Math.random() * 0.1,
         duration: 2 + Math.random() * 3,
         repeat: -1,
         yoyo: true,

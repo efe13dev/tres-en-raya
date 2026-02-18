@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { calculateWinner } from '../utils';
-import { calculateDraw } from '../utils';
 import 'animate.css';
 import confetti from 'canvas-confetti';
+import { useState } from 'react';
+import { calculateDraw, calculateWinner } from '../utils';
 
 function Square({ value, onSquareClick, isResetting }) {
   const squareClass = value 
@@ -59,7 +58,7 @@ export function Board() {
     const currentPlayer = xIsNext ? 'X' : 'O';
     status = (
       <>
-        Turno de jugador: <span className="current-player">{currentPlayer}</span>
+        Turno de jugador: <span className={`current-player current-player-${currentPlayer.toLowerCase()}`}>{currentPlayer}</span>
       </>
     );
   }
