@@ -1,8 +1,14 @@
 {
   "name": "tres-en-raya",
+  "description": "Tres en Raya Premium con modo IA, marcador, tema dinámico y microinteracciones.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eeFee87/tres-en-raya.git"
+  },
+  "homepage": "https://github.com/eeFee87/tres-en-raya",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
