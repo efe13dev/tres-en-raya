@@ -404,12 +404,17 @@ button {
 
 .status-copy {
   flex: 1;
+  display: grid;
+  align-content: start;
 }
 
 .status-value {
   margin: 12px 0 8px;
   font-size: clamp(1.35rem, 2.1vw, 2rem);
   line-height: 1.1;
+  min-height: calc(2em * 1.1);
+  display: flex;
+  align-items: center;
 }
 
 .status-win {
