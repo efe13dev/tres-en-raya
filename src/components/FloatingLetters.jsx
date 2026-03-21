@@ -1,7 +1,7 @@
-import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
+import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 
-export function FloatingLetters() {
+export function FloatingLetters () {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export function FloatingLetters() {
 
     // Crear letras flotantes
     const createFloatingLetter = (letter, index) => {
-      const letterElement = document.createElement("div");
+      const letterElement = document.createElement('div');
       letterElement.textContent = letter;
       letterElement.className = `floating-letter floating-${letter.toLowerCase()}`;
 
@@ -23,9 +23,6 @@ export function FloatingLetters() {
 
       container.appendChild(letterElement);
 
-      // Animación con GSAP
-      const tl = gsap.timeline({ repeat: -1 });
-
       // Movimiento aleatorio continuo
       const animateRandomMovement = () => {
         const newX = Math.random() * (window.innerWidth - 60);
@@ -36,10 +33,10 @@ export function FloatingLetters() {
         gsap.to(letterElement, {
           x: newX - startX,
           y: newY - startY,
-          rotation: rotation,
-          duration: duration,
-          ease: "power2.inOut",
-          onComplete: animateRandomMovement,
+          rotation,
+          duration,
+          ease: 'power2.inOut',
+          onComplete: animateRandomMovement
         });
       };
 
@@ -52,7 +49,7 @@ export function FloatingLetters() {
         duration: 2 + Math.random() * 3,
         repeat: -1,
         yoyo: true,
-        ease: "power2.inOut",
+        ease: 'power2.inOut'
       });
 
       // Animación de escala sutil
@@ -61,7 +58,7 @@ export function FloatingLetters() {
         duration: 3 + Math.random() * 4,
         repeat: -1,
         yoyo: true,
-        ease: "power2.inOut",
+        ease: 'power2.inOut'
       });
 
       return letterElement;
@@ -69,7 +66,7 @@ export function FloatingLetters() {
 
     // Crear múltiples letras X y O
     const letters = [];
-    const letterTypes = ["X", "O"];
+    const letterTypes = ['X', 'O'];
     const numberOfLetters = 12; // 6 X y 6 O
 
     for (let i = 0; i < numberOfLetters; i++) {

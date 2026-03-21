@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const titleLetters = ['T', 'r', 'e', 's', ' ', 'e', 'n', ' ', 'R', 'a', 'y', 'a'];
 
-export function GameTitle() {
+export function GameTitle () {
   return (
     <h1 className='game-title'>
       {titleLetters.map((letter, index) => (

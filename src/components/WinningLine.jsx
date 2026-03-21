@@ -11,7 +11,7 @@ const lineStyles = {
   7: { top: '50%', left: '50%', width: '122%', height: '4px', transform: 'translate(-50%, -50%) rotate(-45deg)', orientation: 'diagonal' }
 };
 
-export function WinningLine({ lineIndex, winner }) {
+export function WinningLine ({ lineIndex, winner }) {
   if (lineIndex === undefined || lineIndex === null || !winner) {
     return null;
   }

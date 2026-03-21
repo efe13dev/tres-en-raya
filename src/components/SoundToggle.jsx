@@ -1,6 +1,6 @@
 import { Volume2, VolumeX } from 'lucide-react';
 
-export function SoundToggle({ enabled, onToggle }) {
+export function SoundToggle ({ enabled, onToggle }) {
   return (
     <button
       type='button'

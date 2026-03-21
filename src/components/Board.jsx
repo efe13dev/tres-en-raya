@@ -16,7 +16,7 @@ const INITIAL_SCORE = {
   draws: 0
 };
 
-function Square({
+function Square ({
   index,
   value,
   onSquareClick,
@@ -59,7 +59,7 @@ function Square({
   );
 }
 
-export function Board({ soundEnabled }) {
+export function Board ({ soundEnabled }) {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(createEmptyBoard);
   const [score, setScore] = useState(INITIAL_SCORE);
@@ -70,7 +70,7 @@ export function Board({ soundEnabled }) {
   const resetPulseRef = useRef(null);
   const { play, warmup } = useSound(soundEnabled);
 
-  function randomInRange(min, max) {
+  function randomInRange (min, max) {
     return Math.random() * (max - min) + min;
   }
 
@@ -183,7 +183,7 @@ export function Board({ soundEnabled }) {
     };
   }, [draw, mode, play, squares, warmup, winnerState, xIsNext]);
 
-  function triggerResetPulse() {
+  function triggerResetPulse () {
     setIsResetting(true);
     if (resetPulseRef.current) {
       window.clearTimeout(resetPulseRef.current);
@@ -193,7 +193,7 @@ export function Board({ soundEnabled }) {
     }, 260);
   }
 
-  function resetRound() {
+  function resetRound () {
     triggerResetPulse();
     setSquares(createEmptyBoard());
     setXIsNext(true);
@@ -202,7 +202,7 @@ export function Board({ soundEnabled }) {
     play('reset');
   }
 
-  function resetSession(nextMode = mode) {
+  function resetSession (nextMode = mode) {
     setMode(nextMode);
     setScore(INITIAL_SCORE);
     setSquares(createEmptyBoard());
@@ -213,7 +213,7 @@ export function Board({ soundEnabled }) {
     play('reset');
   }
 
-  function handleClick(i) {
+  function handleClick (i) {
     if (winnerState || draw || squares[i] || isAiThinking) {
       return;
     }

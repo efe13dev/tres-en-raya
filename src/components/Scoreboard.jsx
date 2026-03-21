@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export function Scoreboard({ score, activePlayer, winner }) {
+export function Scoreboard ({ score, activePlayer, winner }) {
   const items = [
     {
       key: 'X',

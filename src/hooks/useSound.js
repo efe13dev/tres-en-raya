@@ -24,7 +24,7 @@ const SOUND_MAP = {
   ]
 };
 
-function buildTone(audioContext, tone) {
+function buildTone (audioContext, tone) {
   const oscillator = audioContext.createOscillator();
   const gainNode = audioContext.createGain();
   const filterNode = audioContext.createBiquadFilter();
@@ -49,7 +49,7 @@ function buildTone(audioContext, tone) {
   oscillator.stop(endTime + 0.02);
 }
 
-export function useSound(enabled) {
+export function useSound (enabled) {
   const audioContextRef = useRef(null);
 
   const getAudioContext = useCallback(() => {

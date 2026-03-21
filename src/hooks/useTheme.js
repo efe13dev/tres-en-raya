@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'tres-en-raya-theme';
 
-function getInitialTheme() {
+function getInitialTheme () {
   if (typeof window === 'undefined') {
     return 'dark';
   }
@@ -16,7 +16,7 @@ function getInitialTheme() {
   return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
-export function useTheme() {
+export function useTheme () {
   const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {

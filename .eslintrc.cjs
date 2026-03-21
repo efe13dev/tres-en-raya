@@ -17,6 +17,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true }
     ],
-    'is missing in props validation': off
+    'react/prop-types': 'off'
   }
 };

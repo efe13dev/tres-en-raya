@@ -13,7 +13,7 @@ const options = [
   }
 ];
 
-export function ModeSelector({ mode, onChange }) {
+export function ModeSelector ({ mode, onChange }) {
   return (
     <div className='mode-selector' role='tablist' aria-label='Selecciona el modo de partida'>
       {options.map(({ value, label, icon: Icon }) => {

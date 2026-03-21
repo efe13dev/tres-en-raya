@@ -8,7 +8,7 @@ import { ThemeToggle } from './components/ThemeToggle';
 import { useTheme } from './hooks/useTheme';
 import './styles/premium.css';
 
-function App() {
+function App () {
   const { theme, toggleTheme } = useTheme();
   const [soundEnabled, setSoundEnabled] = useState(true);
   const featureCards = [

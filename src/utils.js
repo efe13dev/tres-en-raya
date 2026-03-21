@@ -9,7 +9,7 @@ const WINNING_LINES = [
   [2, 4, 6]
 ];
 
-export function calculateWinner(squares) {
+export function calculateWinner (squares) {
   for (let i = 0; i < WINNING_LINES.length; i++) {
     const [a, b, c] = WINNING_LINES[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -23,7 +23,7 @@ export function calculateWinner(squares) {
   return null;
 }
 
-export function calculateDraw(squares) {
+export function calculateDraw (squares) {
   for (let i = 0; i < squares.length; i++) {
     if (squares[i] === null) {
       return false;
@@ -32,7 +32,7 @@ export function calculateDraw(squares) {
   return true;
 }
 
-function minimax(board, isMaximizing, aiPlayer, humanPlayer, depth) {
+function minimax (board, isMaximizing, aiPlayer, humanPlayer, depth) {
   const result = calculateWinner(board);
 
   if (result?.winner === aiPlayer) {
@@ -84,7 +84,7 @@ function minimax(board, isMaximizing, aiPlayer, humanPlayer, depth) {
   return bestScore;
 }
 
-export function findBestMove(squares, aiPlayer = 'O', humanPlayer = 'X') {
+export function findBestMove (squares, aiPlayer = 'O', humanPlayer = 'X') {
   let bestScore = -Infinity;
   let bestMove = null;
 
