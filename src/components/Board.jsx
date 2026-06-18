@@ -1,4 +1,3 @@
-import 'animate.css';
 import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
 import { RotateCcw, Sparkles } from 'lucide-react';
