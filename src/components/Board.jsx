@@ -1,9 +1,9 @@
 import confetti from 'canvas-confetti';
-import { motion } from 'framer-motion';
-import { RotateCcw, Sparkles } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Eraser, RotateCcw } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSound } from '../hooks/useSound';
-import { calculateDraw, calculateWinner, findBestMove } from '../utils';
+import { calculateDraw, calculateWinner, findAiMove } from '../utils';
 import { ModeSelector } from './ModeSelector';
 import { Scoreboard } from './Scoreboard';
 import { WinningLine } from './WinningLine';
@@ -22,6 +22,7 @@ function Square ({
   disabled,
   isWinningCell
 }) {
+  const reduceMotion = useReducedMotion();
   const squareClass = [
     'square',
     value ? `square-${value.toLowerCase()}` : '',
@@ -41,15 +42,14 @@ function Square ({
           ? `Casilla ${index + 1} ocupada por ${value}`
           : `Jugar en casilla ${index + 1}`
       }
-      whileHover={disabled ? undefined : { y: -3, scale: 1.01 }}
-      whileTap={disabled ? undefined : { scale: 0.97 }}
+      whileTap={disabled || reduceMotion ? undefined : { scale: 0.97 }}
     >
       {value && (
         <motion.span
           key={`${index}-${value}`}
-          initial={{ opacity: 0, scale: 0.55, rotate: value === 'X' ? -16 : 16 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ type: 'spring', stiffness: 280, damping: 18 }}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.55, rotate: value === 'X' ? -16 : 16 }}
+          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, rotate: 0 }}
+          transition={reduceMotion ? { duration: 0.12 } : { type: 'spring', stiffness: 280, damping: 18 }}
         >
           {value}
         </motion.span>
@@ -64,6 +64,7 @@ export function Board ({ soundEnabled }) {
   const [score, setScore] = useState(INITIAL_SCORE);
   const [isResetting, setIsResetting] = useState(false);
   const [mode, setMode] = useState('pvp');
+  const [difficulty, setDifficulty] = useState('normal');
   const [isAiThinking, setIsAiThinking] = useState(false);
   const resolutionKeyRef = useRef('');
   const resetPulseRef = useRef(null);
@@ -78,21 +79,23 @@ export function Board ({ soundEnabled }) {
   const winningCells = new Set(winnerState?.line ?? []);
   const currentPlayer = xIsNext ? 'X' : 'O';
   const statusTone = winnerState
-    ? `Victoria de ${winnerState.winner}`
+    ? `Gana ${winnerState.winner}`
     : draw
-      ? 'Empate perfecto'
-      : mode === 'ai' && !xIsNext
-        ? 'La IA está leyendo el tablero'
-        : `Turno de ${mode === 'ai' ? 'ti' : `jugador ${currentPlayer}`}`;
-  const statusCaption = winnerState
-    ? 'Pulsa reiniciar para abrir la siguiente ronda.'
-    : draw
-      ? 'Ningún hueco libre. Buen pulso por ambas partes.'
+      ? 'Empate'
       : mode === 'ai'
         ? xIsNext
-          ? 'Tú juegas con X. La IA responde con O.'
-          : 'La IA mueve con una pequeña pausa para sentirse más natural.'
-        : 'Modo local para dos jugadores en el mismo dispositivo.';
+          ? 'Tu turno'
+          : 'La IA está pensando'
+        : `Turno de ${currentPlayer}`;
+  const statusCaption = winnerState
+    ? 'Pulsa Nueva ronda para seguir jugando.'
+    : draw
+      ? 'No quedan casillas libres.'
+      : mode === 'ai'
+        ? xIsNext
+          ? 'Juegas con X. La IA responde con O.'
+          : 'La IA mueve con una pequeña pausa.'
+        : 'Dos jugadores en el mismo dispositivo.';
 
   useEffect(() => {
     return () => {
@@ -128,13 +131,15 @@ export function Board ({ soundEnabled }) {
         angle: randomInRange(55, 125),
         spread: randomInRange(70, 95),
         particleCount: randomInRange(90, 130),
-        origin: { y: 0.58 }
+        origin: { y: 0.58 },
+        disableForReducedMotion: true
       });
       confetti({
         angle: randomInRange(235, 305),
         spread: randomInRange(70, 95),
         particleCount: randomInRange(90, 130),
-        origin: { y: 0.58 }
+        origin: { y: 0.58 },
+        disableForReducedMotion: true
       });
       return;
     }
@@ -155,7 +160,7 @@ export function Board ({ soundEnabled }) {
     setIsAiThinking(true);
 
     const timeoutId = window.setTimeout(() => {
-      const nextMove = findBestMove([...squares], 'O', 'X');
+      const nextMove = findAiMove(squares, difficulty, 'O', 'X');
 
       if (nextMove === null) {
         setIsAiThinking(false);
@@ -180,7 +185,7 @@ export function Board ({ soundEnabled }) {
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [draw, mode, play, squares, warmup, winnerState, xIsNext]);
+  }, [difficulty, draw, mode, play, squares, warmup, winnerState, xIsNext]);
 
   function triggerResetPulse () {
     setIsResetting(true);
@@ -233,23 +238,46 @@ export function Board ({ soundEnabled }) {
   return (
     <section className='game-surface'>
       <div className='board-topbar'>
-        <div>
-          <span className='section-kicker'>Partida</span>
-          <h2 className='board-heading'>Edición premium</h2>
-        </div>
+        <h2 className='board-heading'>Tu partida</h2>
         <ModeSelector
           mode={mode}
           onChange={(nextMode) => resetSession(nextMode)}
         />
       </div>
 
-      <div className='status-panel'>
+      {mode === 'ai' && (
+        <div className='difficulty-control'>
+          <label htmlFor='ai-difficulty'>Dificultad</label>
+          <select
+            id='ai-difficulty'
+            className='difficulty-select'
+            value={difficulty}
+            onChange={(event) => {
+              setDifficulty(event.target.value);
+              resetSession('ai');
+            }}
+            aria-describedby='difficulty-hint'
+          >
+            <option value='easy'>Fácil</option>
+            <option value='normal'>Normal</option>
+            <option value='impossible'>Imposible</option>
+          </select>
+          <span className='difficulty-hint' id='difficulty-hint'>
+            Cambiar dificultad reinicia la ronda y el marcador.
+          </span>
+        </div>
+      )}
+
+      <div
+        className='status-panel'
+        aria-live='polite'
+        aria-atomic='true'
+      >
         <div className='status-copy'>
-          <span className='status-label'>Estado actual</span>
           <h3
             className={[
               'status-value',
-              winnerState ? 'status-win' : '',
+              winnerState ? `status-win-${winnerState.winner.toLowerCase()}` : '',
               draw ? 'status-draw' : ''
             ]
               .filter(Boolean)
@@ -260,18 +288,28 @@ export function Board ({ soundEnabled }) {
           <p className='status-caption'>{statusCaption}</p>
         </div>
         <div className='status-player-chip'>
-          <span className='status-chip-label'>Siguiente símbolo</span>
-          <strong className={`player-chip player-chip-${currentPlayer.toLowerCase()}`}>
-            {mode === 'ai' && !xIsNext && !winnerState && !draw ? 'IA · O' : currentPlayer}
+          <span className='status-chip-label'>
+            {winnerState ? 'Ganador' : draw ? 'Resultado' : 'Turno'}
+          </span>
+          <strong
+            className={`player-chip player-chip-${
+              winnerState
+                ? winnerState.winner.toLowerCase()
+                : draw
+                  ? 'neutral'
+                  : currentPlayer.toLowerCase()
+            }`}
+          >
+            {winnerState
+              ? winnerState.winner
+              : draw
+                ? '='
+                : mode === 'ai' && !xIsNext
+                  ? 'IA · O'
+                  : currentPlayer}
           </strong>
         </div>
       </div>
-
-      <Scoreboard
-        score={score}
-        activePlayer={currentPlayer}
-        winner={winnerState?.winner}
-      />
 
       <div className='board-stage'>
         <div className={isResetting ? 'board-grid board-grid-resetting' : 'board-grid'}>
@@ -292,29 +330,43 @@ export function Board ({ soundEnabled }) {
         </div>
       </div>
 
+      <Scoreboard
+        score={score}
+        activePlayer={draw ? null : currentPlayer}
+        winner={winnerState?.winner}
+      />
+
       <div className='board-actions'>
         <button
           type='button'
           className='action-button action-button-primary'
           onClick={resetRound}
         >
-          <RotateCcw size={18} />
-          <span>Reiniciar ronda</span>
+          <RotateCcw size={17} />
+          <span>Nueva ronda</span>
         </button>
         <button
           type='button'
           className='action-button action-button-secondary'
           onClick={() => resetSession(mode)}
+          aria-describedby='reset-score-hint'
         >
-          <Sparkles size={18} />
-          <span>Resetear marcador</span>
+          <Eraser size={17} />
+          <span>Borrar marcador</span>
         </button>
+        <span className='action-hint' id='reset-score-hint'>
+          Borrar marcador también reinicia la ronda.
+        </span>
       </div>
 
       <div className='board-footer-note'>
         {mode === 'ai'
-          ? 'La IA juega perfecto con minimax, así que ganar requiere provocar un error imposible.'
-          : 'Modo local pensado para una experiencia rápida, limpia y visualmente cuidada.'}
+          ? difficulty === 'easy'
+            ? 'La IA elige una casilla al azar.'
+            : difficulty === 'normal'
+              ? 'La IA busca ganar y bloquea tus líneas.'
+              : 'La IA juega sin errores. ¿Puedes conseguir un empate?'
+          : 'X empieza. Después, alternad turnos.'}
       </div>
     </section>
   );

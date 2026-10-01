@@ -11,13 +11,8 @@ export function ThemeToggle ({ theme, onToggle }) {
       aria-label={isLight ? 'Activar tema oscuro' : 'Activar tema claro'}
       aria-pressed={isLight}
     >
-      <span className='utility-toggle-icon'>
-        {isLight ? <Moon size={18} /> : <Sun size={18} />}
-      </span>
-      <span className='utility-toggle-copy'>
-        <strong>{isLight ? 'Modo claro' : 'Modo oscuro'}</strong>
-        <small>Cambiar tema</small>
-      </span>
+      {isLight ? <Sun size={17} /> : <Moon size={17} />}
+      <span>{isLight ? 'Tema claro' : 'Tema oscuro'}</span>
     </button>
   );
 }

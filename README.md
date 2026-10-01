@@ -1,121 +1,74 @@
-# 🎮 Tres en Raya Premium
+# Tres en raya
 
-<div align="center">
+El clásico tres en raya hecho con React 18 y Vite 8. Dos jugadores en el mismo dispositivo o una partida contra la IA con tres niveles de dificultad.
 
-[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF.svg)](https://vitejs.dev/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+## Características
 
-</div>
+- Modo local para dos jugadores y modo contra IA.
+- Tres dificultades de IA: Fácil (casilla al azar), Normal (gana si puede y bloquea tus líneas) e Imposible (`minimax`, juega sin errores).
+- Marcador de victorias de X, O y empates durante la sesión. El marcador no se guarda: se pierde al recargar la página.
+- Tema claro (lavanda) y oscuro (grafito), guardado en `localStorage`. X en ámbar, O en azul.
+- Sonidos sintéticos con Web Audio API, con opción de silenciar.
+- Animaciones con framer-motion que respetan `prefers-reduced-motion`.
+- Tipografía Nunito y favicon SVG propio en `public/favicon.svg`.
+- Responsive hasta 320 px de ancho.
 
-## 📝 Descripción
+## Requisitos
 
-Una reinterpretación premium del clásico tres en raya construida con React y Vite. La aplicación ha sido refactorizada para ofrecer una presentación más cercana a producto real: identidad visual más cuidada, microinteracciones, tema dinámico, marcador persistente durante la sesión y modo contra IA con `minimax`.
+- [Bun](https://bun.sh/) para instalar dependencias y ejecutar los scripts.
+- Node.js `^20.19.0` o `>=22.12.0` (requerido por Vite; `bun run` ejecuta Vite sobre Node por defecto).
 
-## ✨ Características principales
-
-- 🎨 Diseño visual premium con layout editorial, glassmorphism y fondo dinámico
-- 🤖 Modo local y modo contra IA con selección desde la interfaz
-- 🧠 IA basada en `minimax` para jugar de forma óptima
-- 🏆 Marcador de victorias para `X`, `O` y empates
-- 📈 Línea ganadora animada y estados de partida más expresivos
-- 🔊 Sonidos sintéticos con opción para activar o silenciar
-- 🌗 Tema claro/oscuro con persistencia en `localStorage`
-- ✨ Microinteracciones y animaciones con `framer-motion`
-- 📱 Interfaz responsive pensada para escritorio y móvil
-
-## 🛠️ Stack tecnológico
-
-- **React 18** - interfaz y gestión del estado
-- **Vite 6** - entorno de desarrollo y build
-- **Framer Motion** - animaciones y microinteracciones
-- **Lucide React** - iconografía
-- **GSAP** - fondo animado con letras flotantes
-- **Canvas Confetti** - celebración de victorias
-- **CSS personalizado** - sistema visual premium en `src/styles/premium.css`
-- **Web Audio API** - sonidos del juego sin depender de assets externos
-
-## 🧱 Estructura relevante
-
-```text
-src/
-  components/
-    Board.jsx
-    GameTitle.jsx
-    FloatingLetters.jsx
-    ModeSelector.jsx
-    Scoreboard.jsx
-    SoundToggle.jsx
-    ThemeToggle.jsx
-    WinningLine.jsx
-  hooks/
-    useSound.js
-    useTheme.js
-  styles/
-    premium.css
-  App.jsx
-  main.jsx
-  utils.js
-public/
-  favicon.svg
-```
-
-## 🚀 Scripts disponibles
-
-```bash
-npm install
-npm run dev
-npm run build
-npm run preview
-```
-
-## ⚙️ Instalación local
+## Instalación y desarrollo
 
 ```bash
 git clone <url-del-repositorio>
 cd tres-en-raya
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
-La app quedará disponible normalmente en:
+La app queda disponible en `http://localhost:5173`.
+
+También puedes usar `npm install` y `npm run <script>` como alternativa; no mezcles gestores en el mismo repo para no generar lockfiles distintos.
+
+## Scripts
 
 ```bash
-http://localhost:5173
+bun run dev       # servidor de desarrollo
+bun run build     # build de producción en dist/
+bun run preview   # sirve el build localmente
+bun run lint      # ESLint sobre js/jsx
+bun run test      # tests de la lógica (node --test)
 ```
 
-## 🎮 Cómo jugar
+## Cómo se juega
 
-### Modo local
+- En modo local X empieza y los turnos se alternan; gana quien alinee tres en horizontal, vertical o diagonal.
+- Contra la IA juegas con X y la IA responde con O tras una breve pausa. El nivel se elige en el selector Dificultad.
+- **Nueva ronda** limpia el tablero y conserva el marcador y la dificultad.
+- **Borrar marcador** reinicia la ronda y pone el marcador a cero (la dificultad se mantiene).
+- Cambiar de modo de juego o de dificultad reinicia tanto la ronda como el marcador.
 
-- **[jugadores]** Dos jugadores comparten el mismo dispositivo
-- **[turnos]** `X` y `O` alternan jugada automáticamente
-- **[objetivo]** Gana quien complete una línea horizontal, vertical o diagonal
+## Estructura
 
-### Modo IA
-
-- **[humano]** El jugador controla `X`
-- **[ia]** La IA responde con `O`
-- **[algoritmo]** La jugada se calcula con `minimax`
-- **[dificultad]** La IA juega de forma óptima, así que normalmente ganará o forzará empate
-
-## 🧠 Lógica de juego
-
-La lógica principal está en `src/utils.js`.
-
-- **`calculateWinner`** detecta ganador y devuelve también la línea ganadora
-- **`calculateDraw`** detecta empates
-- **`minimax`** puntúa jugadas futuras para la IA
-- **`findBestMove`** escoge la mejor casilla para `O`
-
-## 🎯 Objetivo del rediseño
-
-Esta versión no busca ser solo una demo técnica, sino una base más preparada para evolucionar hacia una experiencia más comercializable:
-
-- **[presentación]** interfaz más pulida y diferenciada
-- **[retención]** más feedback visual y mejor ritmo de partida
-- **[escalabilidad]** estructura más clara para seguir añadiendo modos, perfiles o monetización
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Consulta [LICENSE](./LICENSE) para más detalles.
+```text
+src/
+  components/
+    Board.jsx          tablero, estado de partida y controles
+    GameTitle.jsx      titular principal
+    ModeSelector.jsx   selector de modo local / IA
+    Scoreboard.jsx     marcador de la sesión
+    SoundToggle.jsx    activar o silenciar sonidos
+    ThemeToggle.jsx    tema claro / oscuro
+    WinningLine.jsx    línea ganadora animada
+  hooks/
+    useSound.js        sonidos con Web Audio API
+    useTheme.js        tema y persistencia en localStorage
+  styles/
+    premium.css        tokens y estilos de la app
+  utils.js             calculateWinner, calculateDraw, minimax, findAiMove
+  utils.test.js        tests con node:test
+  App.jsx / main.jsx
+public/
+  favicon.svg
+```

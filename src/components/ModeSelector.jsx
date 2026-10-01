@@ -15,7 +15,7 @@ const options = [
 
 export function ModeSelector ({ mode, onChange }) {
   return (
-    <div className='mode-selector' role='tablist' aria-label='Selecciona el modo de partida'>
+    <div className='mode-selector' role='group' aria-label='Selecciona el modo de partida'>
       {options.map(({ value, label, icon: Icon }) => {
         const isActive = mode === value;
 
@@ -25,8 +25,7 @@ export function ModeSelector ({ mode, onChange }) {
             type='button'
             className={isActive ? 'mode-option mode-option-active' : 'mode-option'}
             onClick={() => onChange(value)}
-            role='tab'
-            aria-selected={isActive}
+            aria-pressed={isActive}
           >
             <Icon size={16} />
             <span>{label}</span>

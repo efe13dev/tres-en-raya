@@ -105,3 +105,35 @@ export function findBestMove (squares, aiPlayer = 'O', humanPlayer = 'X') {
 
   return bestMove;
 }
+
+export function findAiMove (squares, difficulty = 'impossible', aiPlayer = 'O', humanPlayer = 'X') {
+  if (calculateWinner(squares) || calculateDraw(squares)) {
+    return null;
+  }
+
+  const available = [];
+  for (let i = 0; i < squares.length; i++) {
+    if (squares[i] === null) {
+      available.push(i);
+    }
+  }
+
+  if (difficulty === 'easy') {
+    return available[Math.floor(Math.random() * available.length)];
+  }
+
+  if (difficulty === 'normal') {
+    for (const player of [aiPlayer, humanPlayer]) {
+      for (const index of available) {
+        const candidate = squares.slice();
+        candidate[index] = player;
+        if (calculateWinner(candidate)?.winner === player) {
+          return index;
+        }
+      }
+    }
+    return available[Math.floor(Math.random() * available.length)];
+  }
+
+  return findBestMove([...squares], aiPlayer, humanPlayer);
+}
